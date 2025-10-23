@@ -1,0 +1,332 @@
+:root {
+	--bg: #f7f7fb;
+	--card: #ffffff;
+	--accent: #3b82f6;
+	--muted: #6b7280;
+	--gap: 2px;
+	--radius: 12px;
+	--padding: 12px;
+	--weekday-height: 36px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+	margin: 0;
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+		"Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+	background: var(--bg);
+	color: #111;
+}
+
+.wrap {
+	max-width: 900px;
+	margin: 16px auto;
+
+}
+.header{
+	max-width: 900px;
+	display: flex;
+	flex-direction:row-reverse;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0 auto;
+}
+.header img{
+	max-width: 100%
+}
+.add-btn,.btn-delete{
+	display: block;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: #6b7280;
+	display: flex;
+	color:#ffffff;
+	font-weight: bold;
+	text-decoration: none;
+	justify-content: center;
+	align-items: center;
+	font-size:24px;
+	margin-left: 5px;
+}
+#add-menu-btn,.btn-delete{
+	width: 40px;
+	height: 40px;
+	font-size:20px;
+	border :none;
+}
+
+.calendar {
+	background: var(--card);
+	border-radius: var(--radius);
+	box-shadow: 0 6px 18px rgba(12, 20, 40, 0.06);
+	padding: 12px;
+}
+
+.cal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--gap);
+	padding: 6px 4px 12px 4px;
+}
+
+.month-title {
+	font-weight: 700;
+	font-size: 1.05rem
+}
+
+.controls {
+	display: flex;
+	gap: 8px
+}
+
+.btn {
+	background: none;
+	border: 0;
+	padding: 6px 8px;
+	border-radius: 8px;
+	font-size: 1.3rem;
+	color:#111;
+}
+
+.btn:active {
+	transform: translateY(1px)
+}
+
+.weekdays {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: var(--gap);
+	margin-bottom: 8px;
+}
+
+.weekday {
+	height: var(--weekday-height);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.78rem;
+	color: var(--muted);
+	font-weight: 600;
+}
+
+.days {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: var(--gap);
+}
+
+.day {
+	aspect-ratio: 1/1;
+	border-radius: 10px;
+	display: block;
+	position: relative;
+	padding: 6px;
+	text-decoration: none;
+	color: inherit;
+	background: transparent;
+	transition: background .12s, transform .08s;
+	overflow: hidden;
+}
+
+.day:hover {
+	transform: translateY(-3px)
+}
+
+.day .num {
+	position: absolute;
+	top: 6px;
+	left: 6px;
+	font-weight: 700;
+	font-size: 0.92rem;
+}
+
+.day .note {
+	position: absolute;
+	top: 1.5rem;
+	left: 6px;
+	right: 6px;
+	font-size: 0.7rem;
+	color: var(--accent);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.day.out {
+	opacity: 0.28
+}
+
+.day.today {
+	background: linear-gradient(180deg, rgba(59, 130, 246, 0.12),
+		rgba(59, 130, 246, 0.06));
+	border: 1px solid rgba(59, 130, 246, 0.18)
+}
+
+.weekday.sun, .day.sun .num {
+	color: #ef4444
+}
+
+.weekday.sat, .day.sat .num {
+	color: #2563eb
+}
+
+@media ( min-width :640px) {
+	:root {
+		--gap: 8px
+	}
+	.wrap {
+		padding: var(--padding);
+	}
+	.month-title {
+		font-size: 1.2rem
+	}
+	.header h1{
+		width: 100%;
+		text-align: center;
+	}
+	.add-btn{
+		margin-left: 30px;
+	}
+}
+
+/* モーダル */
+.modal-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	display: none;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+
+.modal {
+	background: #fff;
+	border-radius: 12px;
+	max-width: 320px;
+	width: 90%;
+	padding: 16px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+	margin-top: 0;
+	font-size: 1.1rem;
+}
+
+.modal p {
+	margin: 8px 0;
+	line-height: 1.4;
+}
+
+.modal-close,.modify-btn {
+	background: var(--muted);
+	color: #fff;
+	border: 0;
+	padding: 6px 12px;
+	border-radius: 8px;
+	cursor: pointer;
+	margin-top: 12px;
+	width: 100%;
+}
+.modify-btn {
+	background: var(--accent);
+	display: none;
+}
+/* モーダルアクション用のスタイル */
+.modal-actions {
+    display: flex;
+    justify-content: space-between; /* タイトルとボタンを両端に配置 */
+    align-items: center;
+    margin-bottom: 10px;
+}
+.modal-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em; /* ボタンを大きく */
+    padding: 0 5px;
+    margin-left: 10px;
+}
+.modal-actions .action-btns {
+    display: flex;
+}
+.modal-actions .delete-btn {
+    color: #e74c3c;
+}
+.modal-actions .edit-btn {
+    color: #3498db; /* 青色など */
+}
+
+/* 入力画面*/
+.menu-form{
+	padding: 10px;
+}
+.menu-form label{
+  font-size:1.2em;
+  color: #111;
+}
+.menu-form p{
+  margin-bottom: 2px;
+}
+.menu-form input,.menu-form textarea{
+	background: #fff;
+ color: #111;
+  border-radius: 5px;
+  padding: 10px;
+  border: none;
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+
+.menu-form textarea{
+  height: 9rem;
+  resize: none;
+}
+.btn-container{
+	display: flex;
+	margin-top: 0.5em;
+	gap:1rem;
+}
+.delete-btn-container{
+	display: flex;
+	flex-direction:row-reverse;
+}
+.btn-save ,.btn-back{
+	background: var(--accent);
+	color: #fff;
+	border: 0;
+	padding: 6px 12px;
+	border-radius: 8px;
+	cursor: pointer;
+	margin-top: 12px;
+	width: 120px;
+	font-size: 1em;
+}
+.btn-back {
+	background: var(--muted);
+	text-decoration: none;
+	display: block;
+	text-align: center;
+	font-size: 1em;
+}
+.footer {
+	padding: 10px;
+	margin:0 auto;
+	max-width: 900px;
+	text-align: center;
+}
+.msg{
+	padding-left: 10px;	
+	color:#e74c3c;
+}
